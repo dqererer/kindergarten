@@ -2,56 +2,71 @@
   <div class="Index">
     <SearchBar></SearchBar>
     <MainList></MainList>
-    <div class="title">
-      <span>请问下面的div设置样式</span>
-      <div class="set">点击设置</div>
-    </div>
-    <div class="pop">
-      <div class="mask"></div>
-      <div class="content">
-        <div class="line color">
-          <span>请选择背景颜色：</span>
-          <div class="item-list">
-            <div class="item red"></div>
-            <div class="item yellow"></div>
-            <div class="item blue"></div>
+    <router-link to="/WeChat">WeChat</router-link>
+    <div>
+      <div class="title">
+        <span>请问下面的div设置样式</span>
+        <div class="set">点击设置</div>
+      </div>
+      <div class="pop">
+        <div class="mask"></div>
+        <div class="content">
+          <div class="line color">
+            <span>请选择背景颜色：</span>
+            <div class="item-list">
+              <div class="item red"></div>
+              <div class="item yellow"></div>
+              <div class="item blue"></div>
+            </div>
+            
           </div>
-          
-        </div>
-        <div class="line width">
-          <span>请选择宽度(rem)：</span>
-          <div class="item-list">
-            <div class="item item10">10</div>
-            <div class="item item15">15</div>
-            <div class="item item20">20</div>
+          <div class="line width">
+            <span>请选择宽度(rem)：</span>
+            <div class="item-list">
+              <div class="item item10">10</div>
+              <div class="item item15">15</div>
+              <div class="item item20">20</div>
+            </div>
           </div>
-        </div>
-        <div class="line height">
-          <span>请选择高度(rem)：</span>
-          <div class="item-list">
-            <div class="item item10">10</div>
-            <div class="item item15">15</div>
-            <div class="item item20">20</div>
+          <div class="line height">
+            <span>请选择高度(rem)：</span>
+            <div class="item-list">
+              <div class="item item10">10</div>
+              <div class="item item15">15</div>
+              <div class="item item20">20</div>
+            </div>
           </div>
-        </div>
-        <div class="handle">
-          <div class="cancel">恢复</div>
-          <div class="ok">确定</div>
+          <div class="handle">
+            <div class="cancel">恢复</div>
+            <div class="ok">确定</div>
+          </div>
         </div>
       </div>
+      <div class="box"></div>
     </div>
-    <div class="box"></div>
+    <div class="message">
+      <div class="title">留言板</div>
+      <div>
+        <textarea rows="10" cols="80"></textarea>
+        <div class="submit">提交</div>
+      </div>
+      <div class="message-list">
+        <div class="message-item">klkk</div>
+      </div>
+    </div>  
   </div>
 </template>
 
 <script>
 import SearchBar from './SearchBar';
 import MainList from './MainList';
+
 export default {
   name: 'Index',
   components: {
     SearchBar,
-    MainList
+    MainList,
+
   },
   mounted: function(){
     //设置窗口显示
@@ -105,6 +120,16 @@ export default {
       box.style.height = "6rem";
       box.style.background = "white";
     };
+    // let messageList = [];
+    // let messageDom = "";
+    let messageCur = document.querySelector('textarea');
+    document.querySelector('.submit').onclick = function(){
+      // messageList.push(messageCur.value);
+      let item = document.createElement('div');
+      item.innerHTML = messageCur.value;
+      item.setAttribute('class','message-item');
+      document.querySelector('.message-list').appendChild(item);
+    }
   },
 }
 </script>
@@ -208,5 +233,40 @@ export default {
   height: 6rem;
   width: 6rem;
   border: 0.01rem solid #000;
-}  
-</style>
+} 
+.message{
+  margin-top: 3rem;
+  height: 30rem;
+  width: 40rem;
+  background-image: linear-gradient(#73b3f5,#f2f6fc);
+} 
+.message .title{
+  display: inline-block;
+  text-align: center;
+  /* 我原本没有用display,只用的text-aline是不生效的，我记得说块元素居中是margin0auto,inline元素是text-aline，但是现在我是要对块元素内部的htmltext定位，那不是就属于行内元素么？还是说只要是这种htmltext外面都要包一个行内元素，不然就没法定位？ */
+  font-size: 2rem;
+  height: 6rem;
+  line-height: 6rem;
+}
+.message .submit{
+  height: 2rem;
+  width: 3rem;
+  margin: 0 auto;
+  background: white;
+  line-height: 2rem;
+  border: 0.01rem solid #303133;
+  border-radius: 0.5rem;
+  /* 如果不设背景色（就看不出来了），radius会让原本的边框颜色变浅是为什么？ */
+}
+.message .message-list{
+  padding: 2rem;
+}
+.message .message-list .message-item{
+  background: white;
+  width: 22rem;
+  margin: 0 auto;
+  height: 2rem;
+  line-height: 2rem;
+  border-radius: 1rem;
+}
+</style> 

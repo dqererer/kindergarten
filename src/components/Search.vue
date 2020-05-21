@@ -1,6 +1,6 @@
 <template>
   <div class="Search">
-    <input type="text" class="num1" value=""> + <input type="text" class="num2" value=""> <div class="add"> = </div> <span></span>
+    <input type="text" class="num1"> + <input type="text" class="num2"> <div class="add"> = </div> <span></span>
   </div>
 </template>
 

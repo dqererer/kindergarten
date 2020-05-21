@@ -2,6 +2,7 @@ import VueRouter from 'vue-router'
 import Index from "../components/Index";
 import SearchBar from '../components/SearchBar';
 import Search from '../components/Search';
+import WeChat from '../components/WeChat';
 
 
 // 2. 定义路由
@@ -12,7 +13,8 @@ import Search from '../components/Search';
 const routes = [
   { path: '/', redirect: 'Index'},
   { path: '/Index', component: Index, name:'Index'},
-  { path:'/Search',component: Search ,name:'Search'}, 
+  { path: '/Search',component: Search, name:'Search'}, 
+  { path: '/WeChat',component: WeChat, name:'WeChat'}
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
