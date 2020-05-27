@@ -2,6 +2,7 @@
   <div class="Index">
     <SearchBar></SearchBar>
     <MainList></MainList>
+    <Slide :list="slide_list"></Slide>
     <router-link to="/WeChat">WeChat</router-link>
     <div>
       <div class="title">
@@ -60,13 +61,34 @@
 <script>
 import SearchBar from './SearchBar';
 import MainList from './MainList';
+import Slide from './Slide';
+import img1 from '../assets/img/111.jpg';
+import img2 from '../assets/img/222.jpg';
+import img3 from '../assets/img/333.jpg';
+import img4 from '../assets/img/444.jpg';
 
 export default {
   name: 'Index',
+  data: function(){
+    return{
+      slide_list: [
+        {
+          id:1,
+          img:img1,
+          url:"",
+        },
+        {
+          id:2,
+          img:img2,
+          url:"",
+        }
+      ]
+    }
+  },
   components: {
     SearchBar,
     MainList,
-
+    Slide,
   },
   mounted: function(){
     //设置窗口显示
@@ -181,7 +203,6 @@ export default {
   margin-top: -5rem;
   margin-left: -9rem;
   background: white;
-  /* 为啥还透明啊 啊啊啊啊？？？ */
   padding: 2rem;
   box-sizing: border-box;
 }
