@@ -1,13 +1,16 @@
 <template>
-  <div class="WeChat">
+  <div class="WeChat" @click="hideMenu">
+    <div class="store">收藏 {{storeList.length}}</div>
     <div class="chat-list" ref="chat">
       <div class="chat-item" v-for="(item,index) in messageList" v-bind:key = "index">
         <div :class="item.isMale?'icon left':'icon right'">
           <img :src='item.imgURL'>
         </div>
         <div class="icon right"></div>
-        <div :class="item.isMale?'message left':'message right'">{{item.message}}</div>
-        <div v-if="isShowAddStoreButton" class="add-store">加入收藏</div>
+        <div :class="item.isMale?'message left':'message right'">
+          <span @touchstart.prevent="startTime" @touchend.prevent="endTime(index)">{{item.message}}</span>
+          <div class="menu" ref="menu" v-if="item.isShowAddStoreButton" @click="addIntoStoreList(index)">加入收藏</div>
+        </div>
       </div>
     </div>
     <div class="footer">
@@ -33,6 +36,12 @@ export default {
       message: "",
       isMale: true,
       messageList: [],
+      curTouch:{
+        timeOfStart:{}, //touch start time
+        timeOfEnd:{}, //touch end time
+        screenY:0,
+      },
+      storeList: [],
     }
   },
   computed: {
@@ -80,6 +89,40 @@ export default {
       window.scrollTo(0,(this.$refs.chat.scrollHeight));
 
     },
+    startTime: function(e){
+      this.curTouch['timeOfStart'] = new Date();
+      this.curTouch['screenX'] = e.touches[0].screenX;
+      this.curTouch['screenY'] = e.touches[0].screenX;
+    },
+    endTime: function(index){
+      this.hideMenu()
+
+      this.curTouch['timeOfEnd']= new Date();
+      let timeGap = this.curTouch.timeOfEnd - this.curTouch.timeOfStart;
+      if(timeGap >= 0){
+        this.messageList[index].isShowAddStoreButton = true;
+        console.log(this.messageList);
+        this.$nextTick(()=>{
+          // this.$refs.menu[0].style.top = this.curTouch.screenY /2 + 'px'; 
+          // this.$refs.menu[0].style.left = this.curTouch.screenX /2 + 'px'; 
+        });
+      } 
+    },
+    hideMenu :function(){
+      this.messageList.forEach((cur)=>{
+        cur.isShowAddStoreButton = false;
+      })
+    },
+    addIntoStoreList: function(index){
+      alert(1);
+      let obj = {
+        message: this.messageList[index].message,
+        time: new Date(),
+      }
+      this.storeList.push(obj);
+      // this.storeList = [...this.storeList, obj]
+      this.hideMenu();
+    }
   }
 }
 </script>
@@ -117,7 +160,8 @@ export default {
 .chat-list .chat-item{
   width: 100%;
   /* height: 3.2rem; 我想要被自然撑开高度为什么不行，样式就乱了 */
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  overflow:auto;
 }
 .chat-list .left{
   float: left;
@@ -146,5 +190,28 @@ export default {
   background: #99e274;
   border-radius: 0.2rem;
   margin: 0 1rem;
+  position: relative;
+}
+.chat-list .chat-item .message .menu{
+  height: 3rem;
+  width: 6rem;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.store{
+    background: #b9bcc1;
+    padding-left: 1rem;
+    box-sizing: border-box;
+    line-height: 2.5rem;
+    color: white;
+    height: 2.5rem;
+    width: 5.5rem;
+    border-radius: 2rem;
+    position: fixed;
+    right: -16px;
+    top: 0;
+    text-align: left;
 }
 </style>
